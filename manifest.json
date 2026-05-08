@@ -1,0 +1,16 @@
+{
+  "name": "环两山招商引资项目库",
+  "short_name": "环两山招商",
+  "description": "南昆山-罗浮山招商引资项目库 · 政企资源对接平台",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1e3a8a",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏔️</text></svg>",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
