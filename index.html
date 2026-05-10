@@ -3776,10 +3776,7 @@ td strong { font-weight: 700; color: var(--text); }
             <label>建议投资方向</label>
             <input class="form-input" id="f-invest-dir" type="text" placeholder="如：智慧农业、农旅融合">
           </div>
-          <div class="form-group">
-            <label>预计投资额（万元）</label>
-            <input class="form-input" id="f-invest-amount" type="number" placeholder="如：3000">
-          </div>
+          
         </div>
         <div class="form-row">
           <div class="form-group">
@@ -3857,7 +3854,7 @@ td strong { font-weight: 700; color: var(--text); }
         <ul>
           <li>支持 <code>.xlsx / .csv</code> 格式，请先下载标准模板</li>
           <li>必填列：<code>name</code>（地块名称）、<code>town</code>（镇街）、<code>area</code>（面积）、<code>landType</code>（土地类型）、<code>resourceType</code>（资源类型）</li>
-          <li>选填列：<code>investDir</code>（投资方向）、<code>investAmount</code>（投资额）、<code>status</code>（状态）、<code>contact</code>（联系人）、<code>phone</code>（电话）、<code>remark</code>（备注）</li>
+          <li>选填列：<code>investDir</code>（投资方向）、<code>status</code>（状态）、<code>contact</code>（联系人）、<code>phone</code>（电话）、<code>remark</code>（备注）</li>
           <li>建议单次导入不超过 <code>500</code> 条，超出请分批导入</li>
           <li>导入后请在「数据管理」页面审核确认</li>
         </ul>
@@ -3903,7 +3900,7 @@ td strong { font-weight: 700; color: var(--text); }
 <script>
 // ===== 数据（从 data.js 加载） =====
 // 字段：id, name, town, address, area, landType, ownership,
-//      investDir, investAmount, status, contact, phone, remark, resourceType, extra, images[]
+//      investDir, status, contact, phone, remark, resourceType, extra, images[]
 
 // ===== 全局变量 =====
 // 响应式分页：手机20条，平板30条，桌面40条
@@ -3997,13 +3994,11 @@ function populateFormSelects() {
 function updateStats() {
   const lmCount = LAND_DATA.filter(d => (d.county || '龙门') === '龙门').length;
   const blCount = LAND_DATA.filter(d => (d.county || '龙门') === '博罗').length;
-  const totalInvest = LAND_DATA.reduce((s, d) => s + (d.investAmount || 0), 0);
 
   const stats = [
     { icon: '🏞️', bg: 'linear-gradient(135deg,#dbeafe,#eff6ff)', color: '#2563eb', value: filteredData.length, label: '当前项目数', sub: '全部 ' + LAND_DATA.length + ' 个项目', subBg: '#dbeafe', subColor: '#2563eb' },
     { icon: '🗺️', bg: 'linear-gradient(135deg,#d1fae5,#ecfdf5)', color: '#059669', value: lmCount, label: '龙门项目', sub: '龙门 ' + lmCount + ' 宗', subBg: '#d1fae5', subColor: '#059669' },
     { icon: '🏔️', bg: 'linear-gradient(135deg,#fef3c7,#fffbeb)', color: '#d97706', value: blCount, label: '博罗项目', sub: '博罗 ' + blCount + ' 宗', subBg: '#fef3c7', subColor: '#d97706' },
-    { icon: '💰', bg: 'linear-gradient(135deg,#ede9fe,#f5f3ff)', color: '#7c3aed', value: Math.round(totalInvest / 10000 * 100) / 100 + '亿', label: '总投资额', sub: '累计 ' + totalInvest.toLocaleString() + ' 万元', subBg: '#ede9fe', subColor: '#7c3aed' },
   ];
 
   document.getElementById('stat-grid').innerHTML = stats.map(s => `
@@ -4182,7 +4177,7 @@ function renderTable(data) {
     document.getElementById('result-content').innerHTML = '<div class="empty-state"><div class="empty-icon">🔍</div><p>未找到匹配的地块，请调整筛选条件</p></div>';
     return;
   }
-  document.getElementById('result-content').innerHTML = `<div class="data-table"><table><thead><tr><th>序号</th><th>地块名称</th><th>镇街</th><th>面积</th><th>土地类型</th><th>资源类型</th><th>招商状态</th><th>投资额</th><th>联系人</th></tr></thead><tbody>${data.map((d, i) => `<tr onclick="openDetail(${d.id})"><td>${String(startIdx(d)+1).padStart(2,'0')}</td><td class="col-name">${d.name.length > 16 ? d.name.slice(0,16)+'…' : d.name}</td><td>${d.town}</td><td><strong>${d.area || '-'}亩</strong></td><td>${d.landType || '-'}</td><td>${d.resourceType || '-'}</td><td><span class="latest-status ${getStatusClass(d.status)}">${d.status}</span></td><td>${d.investAmount > 0 ? d.investAmount.toLocaleString() : '-'}</td><td>${d.contact || '-'}</td></tr>`).join('')}</tbody></table></div>`;
+  document.getElementById('result-content').innerHTML = `<div class="data-table"><table><thead><tr><th>序号</th><th>地块名称</th><th>镇街</th><th>面积</th><th>土地类型</th><th>资源类型</th><th>招商状态</th><th>联系人</th></tr></thead><tbody>${data.map((d, i) => `<tr onclick="openDetail(${d.id})"><td>${String(startIdx(d)+1).padStart(2,'0')}</td><td class="col-name">${d.name.length > 16 ? d.name.slice(0,16)+'…' : d.name}</td><td>${d.town}</td><td><strong>${d.area || '-'}亩</strong></td><td>${d.landType || '-'}</td><td>${d.resourceType || '-'}</td><td><span class="latest-status ${getStatusClass(d.status)}">${d.status}</span></td><td>${d.contact || '-'}</td></tr>`).join('')}</tbody></table></div>`;
 }
 
 function startIdx(d) {
@@ -4295,10 +4290,6 @@ function openDetail(id) {
       <div class="detail-field highlight">
         <div class="label" style="color:var(--blue-mid);">面积（亩）</div>
         <div class="value" style="color:var(--blue-mid);font-size:22px;font-weight:800;">${d.area || 0} <small style="font-size:13px;color:var(--text-sub);">亩</small></div>
-      </div>
-      <div class="detail-field">
-        <div class="label">预计投资额</div>
-        <div class="value">${d.investAmount > 0 ? d.investAmount.toLocaleString() + ' 万元' : '待定'}</div>
       </div>
       <div class="detail-field">
         <div class="label">土地类型</div>
@@ -4423,8 +4414,7 @@ function submitForm() {
         address: document.getElementById('f-address').value.trim(),
         ownership: document.getElementById('f-ownership').value.trim(),
         investDir: document.getElementById('f-invest-dir').value.trim(),
-        investAmount: parseFloat(document.getElementById('f-invest-amount').value) || 0,
-        status: document.getElementById('f-status').value,
+          status: document.getElementById('f-status').value,
         contact: document.getElementById('f-contact').value.trim() || '',
         phone: document.getElementById('f-phone').value.trim() || '',
         remark: document.getElementById('f-remark').value.trim(),
@@ -4444,7 +4434,6 @@ function submitForm() {
       address: document.getElementById('f-address').value.trim(),
       ownership: document.getElementById('f-ownership').value.trim(),
       investDir: document.getElementById('f-invest-dir').value.trim(),
-      investAmount: parseFloat(document.getElementById('f-invest-amount').value) || 0,
       status: document.getElementById('f-status').value,
       contact: document.getElementById('f-contact').value.trim() || '',
       phone: document.getElementById('f-phone').value.trim() || '',
@@ -4495,7 +4484,6 @@ function editItem(id) {
   document.getElementById('f-resource-type').value = d.resourceType || '';
   document.getElementById('f-status').value = d.status || '招募中';
   document.getElementById('f-demand').value = d.demand || '';
-  document.getElementById('f-invest-amount').value = d.investAmount || '';
   document.getElementById('f-town-detail').value = d.town || '';
   document.getElementById('f-ownership').value = d.ownership || '';
   document.getElementById('f-contact').value = d.contact || '';
@@ -4608,7 +4596,6 @@ function downloadTemplate() {
       category: "文旅",
       status: "招募中",
       investDir: "森林康养、农旅融合",
-      investAmount: 3000,
       address: "龙门县南昆山xxx村",
       ownership: "村集体所有",
       contact: "张三",
