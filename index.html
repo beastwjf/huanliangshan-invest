@@ -4208,7 +4208,7 @@ function renderCard(data) {
         <div class="card-name">${d.name}</div>
         <div class="card-tags">
           <span class="card-tag" style="background:${countyBg};color:${countyColor};">📍${county}·${d.town}</span>
-          <span class="card-tag">🏷️${d.category || d.resourceType || ''}</span>
+          <span class="card-tag">🏷️${d.resourceType || ''}</span>
           <span class="card-tag">📐${d.landType || ''}</span>
           ${imgs.length > 0 ? `<span class="card-tag" style="color:var(--blue-mid);">🖼️×${imgs.length}</span>` : ''}
         </div>
@@ -4219,7 +4219,7 @@ function renderCard(data) {
         </div>
       </div>
     </div>`;
-  }).join(''}</div>`;
+  }).join('')}</div>`;
 }
 
 function renderPagination(totalPages, elId, pageVar, goFn) {
@@ -4279,7 +4279,7 @@ function openDetail(id) {
     <div class="detail-tags">
       <span class="card-tag" style="font-size:12px;padding:4px 14px;background:${countyBg};color:${countyColor};">🏛️ ${county}</span>
       <span class="card-tag" style="font-size:12px;padding:4px 14px;background:var(--blue-light);color:var(--blue-mid);">📍 ${d.town}</span>
-      <span class="card-tag">🏷️ ${d.category || d.resourceType || ''}</span>
+      <span class="card-tag">🏷️ ${d.resourceType || ''}</span>
       <span class="card-tag">📐 ${d.landType || ''}</span>
       <span class="latest-status ${getStatusClass(d.status)}" style="font-size:12px;padding:4px 14px;">${d.status}</span>
       ${imgs.length > 0 ? `<span class="card-tag" style="color:var(--blue-mid);">🖼️ ${imgs.length}/3张</span>` : ''}
@@ -4552,7 +4552,7 @@ function renderAdminListPage() {
           <span style="color:${county === '龙门' ? 'var(--green)' : 'var(--amber)'};">🏛️${county}</span>
           <span>📍${d.town}</span>
           <span>📐${d.area || 0}亩</span>
-          <span>🏷️${d.category || d.resourceType || ''}</span>
+          <span>🏷️${d.resourceType || ''}</span>
           <span class="latest-status ${getStatusClass(d.status)}" style="font-size:10px;padding:1px 6px;">${d.status}</span>
           ${imgs.length > 0 ? `<span style="color:var(--blue-mid);">🖼️×${imgs.length}</span>` : ''}
         </div>
