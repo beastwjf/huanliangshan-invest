@@ -4072,7 +4072,7 @@ function renderLatestList() {
   const count = getLatestCount();
   const list = LAND_DATA.slice(0, count);
   document.getElementById('latest-list-content').innerHTML = list.map((d, i) => `
-    <div class="latest-item" onclick="openDetail(${d.id})">
+    <div class="latest-item" onclick="openDetail('${d.id}')">
       <div class="latest-num">${String(i+1).padStart(2,'0')}</div>
       <div class="latest-name">${d.name}</div>
       <div class="latest-town">${d.town}</div>
@@ -4177,7 +4177,7 @@ function renderTable(data) {
     document.getElementById('result-content').innerHTML = '<div class="empty-state"><div class="empty-icon">🔍</div><p>未找到匹配的地块，请调整筛选条件</p></div>';
     return;
   }
-  document.getElementById('result-content').innerHTML = `<div class="data-table"><table><thead><tr><th>序号</th><th>地块名称</th><th>镇街</th><th>面积</th><th>土地类型</th><th>资源类型</th><th>招商状态</th><th>联系人</th></tr></thead><tbody>${data.map((d, i) => `<tr onclick="openDetail(${d.id})"><td>${String(startIdx(d)+1).padStart(2,'0')}</td><td class="col-name">${d.name.length > 16 ? d.name.slice(0,16)+'…' : d.name}</td><td>${d.town}</td><td><strong>${d.area || '-'}亩</strong></td><td>${d.landType || '-'}</td><td>${d.resourceType || '-'}</td><td><span class="latest-status ${getStatusClass(d.status)}">${d.status}</span></td><td>${d.contact || '-'}</td></tr>`).join('')}</tbody></table></div>`;
+  document.getElementById('result-content').innerHTML = `<div class="data-table"><table><thead><tr><th>序号</th><th>地块名称</th><th>镇街</th><th>面积</th><th>土地类型</th><th>资源类型</th><th>招商状态</th><th>联系人</th></tr></thead><tbody>${data.map((d, i) => `<tr onclick="openDetail('${d.id}')"><td>${String(startIdx(d)+1).padStart(2,'0')}</td><td class="col-name">${d.name.length > 16 ? d.name.slice(0,16)+'…' : d.name}</td><td>${d.town}</td><td><strong>${d.area || '-'}亩</strong></td><td>${d.landType || '-'}</td><td>${d.resourceType || '-'}</td><td><span class="latest-status ${getStatusClass(d.status)}">${d.status}</span></td><td>${d.contact || '-'}</td></tr>`).join('')}</tbody></table></div>`;
 }
 
 function startIdx(d) {
@@ -4195,7 +4195,7 @@ function renderCard(data) {
     const county = d.county || '龙门';
     const countyColor = county === '龙门' ? 'var(--green)' : 'var(--amber)';
     const countyBg = county === '龙门' ? 'var(--green-light)' : 'var(--amber-light)';
-    return `<div class="land-card" onclick="openDetail(${d.id})">
+    return `<div class="land-card" onclick="openDetail('${d.id}')">
       <div class="card-img">
         ${imgSrc ? `<img src="${imgSrc}" alt="${d.name}" onerror="this.style.display='none';this.parentElement.querySelector('.card-img-icon').style.display='block';"><span class="card-img-icon" style="display:none">🏡</span>` : `<span class="card-img-icon">🏡</span>`}
       </div>
@@ -4546,7 +4546,7 @@ function renderAdminListPage() {
         </div>
       </div>
       <div class="actions">
-        <button class="action-btn" onclick="openDetail(${d.id})">👁️ 查看</button>
+        <button class="action-btn" onclick="openDetail('${d.id}')">👁️ 查看</button>
         <button class="action-btn edit-btn" onclick="editItem(${d.id})">✏️ 编辑</button>
         <button class="action-btn danger" onclick="deleteItem(${d.id})">🗑️ 删除</button>
       </div>
