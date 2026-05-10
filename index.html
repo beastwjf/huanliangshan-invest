@@ -3961,17 +3961,11 @@ function populateFilters() {
     </select>
     <span class="filter-label">行业</span>
     <select class="filter-select" id="filter-category" onchange="handleSearch()">
-      <option value="">全部</option>
-      <option value="文旅">文旅</option>
-      <option value="农文旅">农文旅</option>
-      <option value="农林">农林</option>
-      <option value="中医药">中医药</option>
-      <option value="工业">工业</option>
-      <option value="农业食品">农业食品</option>
+      <option value="">全部</option>${resourceTypes.map(r => `<option value="${r}">${r}</option>`).join('')}
     </select>
     <span class="filter-label">资源类型</span>
     <select class="filter-select" id="filter-resource" onchange="handleSearch()">
-      <option value="">全部</option>${resourceTypes.map(r => `<option value="${r}">${r}</option>`).join('')}
+      <option value="">全部</option>${landTypes.map(l => `<option value="${l}">${l}</option>`).join('')}
     </select>
     <span class="filter-label">招商状态</span>
     <select class="filter-select" id="filter-status" onchange="handleSearch()">
@@ -4106,7 +4100,7 @@ function handleSearch() {
     const matchCounty = !county || (d.county || '龙门') === county;
     const matchTown = !town || d.town === town;
     const matchCategory = !category || d.resourceType === category;
-    const matchResource = !resource || d.resourceType === resource;
+    const matchResource = !resource || d.landType === resource;
     const matchStatus = !status || d.status === status;
     return matchKeyword && matchCounty && matchTown && matchCategory && matchResource && matchStatus;
   });
